@@ -52,6 +52,51 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
+        <style>
+            .url-group {
+                margin-top: 16px;
+                text-align: left;
+            }
+            .url-label {
+                display: block;
+                font-size: 13px;
+                font-weight: 600;
+                color: #94a3b8;
+                margin-bottom: 6px;
+            }
+            .url-box {
+                display: flex;
+                gap: 8px;
+                background: rgba(15, 23, 42, 0.6);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                padding: 6px 6px 6px 12px;
+            }
+            .url-box input {
+                flex: 1;
+                background: transparent;
+                border: none;
+                color: #38bdf8;
+                font-size: 13px;
+                outline: none;
+                font-family: monospace;
+            }
+            .url-box button {
+                background: rgba(255, 255, 255, 0.1);
+                border: none;
+                color: #ffffff;
+                font-size: 12px;
+                font-weight: 600;
+                padding: 8px 14px;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                white-space: nowrap;
+            }
+            .url-box button:active {
+                transform: scale(0.95);
+                background: #2563eb;
+            }
     </style>
 </head>
 <body class="text-slate-200 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950 font-sans antialiased">
@@ -82,6 +127,20 @@
                 <p class="text-slate-300/90">
                     App sẽ được cập nhật liên tục. Nếu sử dụng không được, có thể App đó đã bị Fix. Vui lòng cài đặt Config này sau khi đã kích hoạt Locket Gold thành công.
                 </p>
+            </div>
+        </div>
+         <div class="url-group">
+            <label class="url-label">URL Config</label>
+            <div class="url-box">
+                <input type="text" value="URL1" id="urlConfigInput" readonly>
+                <button onclick="copyURL('urlConfigInput', this)">Sao chép</button>
+            </div>
+        </div>
+        <div class="url-group">
+            <label class="url-label">URL Modules</label>
+            <div class="url-box">
+                <input type="text" value="URL2" id="urlModulesInput" readonly>
+                <button onclick="copyURL('urlModulesInput', this)">Sao chép</button>
             </div>
         </div>
         <div class="glass-card rounded-3xl p-6 shadow-2xl relative overflow-hidden flex flex-col gap-6">
@@ -140,5 +199,21 @@
     <script>
         lucide.createIcons();
     </script>
+    <script>
+            function copyURL(inputId, btn) {
+                const input = document.getElementById(inputId);
+                input.select();
+                input.setSelectionRange(0, 99999);
+                navigator.clipboard.writeText(input.value).then(() => {
+                    const originalText = btn.innerText;
+                    btn.innerText = "Đã chép!";
+                    btn.style.background = "#10b981";
+                    setTimeout(() => {
+                        btn.innerText = originalText;
+                        btn.style.background = "rgba(255, 255, 255, 0.1)";
+                    }, 2000);
+                });
+            }
+ </script>
 </body>
 </html>
