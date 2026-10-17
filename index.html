@@ -316,5 +316,57 @@
         alert("Đã sao chép mật khẩu vào bộ nhớ tạm!");
     }
 </script>
+<script>
+    // Khởi tạo mật khẩu mặc định lần đầu là "12345678" nếu chưa có
+    if (!localStorage.getItem("site_password")) {
+        localStorage.setItem("site_password", "12345678");
+    }
+
+    // Kiểm tra hiển thị khi tải trang (Cứ tải lại / F5 là ép buộc nhập lại mật khẩu ngay)
+    window.addEventListener("load", function() {
+        if (window.location.hash === "#admin-minhduc08") {
+            // Nếu là trang admin thì mở giao diện admin
+            document.getElementById("loginView").style.display = "none";
+            document.getElementById("adminView").style.display = "block";
+            document.getElementById("adminPassDisplay").value = localStorage.getItem("site_password");
+            document.getElementById("securityScreen").style.display = "flex";
+        } else {
+            // Trang chính: Mặc định luôn hiện màn hình nhập mật khẩu mỗi khi tải lại trang
+            document.getElementById("loginView").style.display = "block";
+            document.getElementById("adminView").style.display = "none";
+            document.getElementById("securityScreen").style.display = "flex";
+            document.getElementById("passInput").value = ""; // Xóa sạch ô nhập
+        }
+    });
+
+    // Xử lý xác thực mật khẩu
+    function checkPassword() {
+        const inputVal = document.getElementById("passInput").value;
+        const correctPass = localStorage.getItem("site_password");
+        if (inputVal === correctPass) {
+            // Đúng mật khẩu -> Ẩn màn hình khóa đi để vào web
+            document.getElementById("securityScreen").style.display = "none";
+        } else {
+            // Sai mật khẩu -> Báo lỗi
+            document.getElementById("loginError").style.display = "block";
+        }
+    }
+
+    // Tạo mật khẩu ngẫu nhiên 8 số (Dành riêng cho Admin)
+    function generateNewPass() {
+        const randomPass = Math.floor(10000000 + Math.random() * 90000000).toString();
+        localStorage.setItem("site_password", randomPass);
+        document.getElementById("adminPassDisplay").value = randomPass;
+        alert("Đã tạo mật khẩu mới thành công!");
+    }
+
+    // Nút sao chép mật khẩu ở trang admin
+    function copyAdminPass() {
+        const passBox = document.getElementById("adminPassDisplay");
+        passBox.select();
+        navigator.clipboard.writeText(passBox.value);
+        alert("Đã sao chép mật khẩu vào bộ nhớ tạm!");
+    }
+</script>
 </body>
 </html>
