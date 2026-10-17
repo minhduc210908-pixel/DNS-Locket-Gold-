@@ -123,8 +123,6 @@
     <main class="max-w-md mx-auto px-4 py-8 flex-1 w-full flex flex-col gap-6">
         <div id="securityScreen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px;">
     <div style="background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 32px 24px; max-width: 380px; width: 100%; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
-        
-        <!-- Màn hình Nhập Mật Khẩu Chính -->
         <div id="loginView">
             <div style="font-size: 36px; margin-bottom: 16px;">🔒</div>
             <h2 style="color: #f8fafc; font-size: 18px; font-weight: 600; margin-bottom: 8px;">Yêu Cầu Bảo Mật</h2>
@@ -137,8 +135,6 @@
             
             <a href="https://www.instagram.com/_08.mduzz?cplk=MWY5czRkdzU1cGQxcw%3D%3D&utm_source=qr" target="_blank" style="display: block; color: #94a3b8; font-size: 13px; text-decoration: none;">👉Nhắn trực tiếp cho Minh Đức ở đây💌👈</a>
         </div>
-
-        <!-- Màn Hình Trang Admin (admin-minhduc08) -->
         <div id="adminView" style="display: none; text-align: left;">
             <h2 style="color: #f8fafc; font-size: 18px; font-weight: 600; margin-bottom: 8px; text-align: center;">Trang Quản Trị Admin</h2>
             <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px; text-align: center;">Tạo và đổi mật khẩu 8 số mới cho trang web.</p>
@@ -249,7 +245,6 @@
                     alert("Đức chưa thay link thực tế vào code kìa!");
                     return;
                 }
-
                 let srLink = "";
                 if (type === 'config') {
                     srLink = `sub://${btoa(targetUrl)}`;
@@ -260,12 +255,9 @@
             }
 </script>
 <script>
-    // Khởi tạo mật khẩu mặc định lần đầu là "12345678" nếu chưa có
     if (!localStorage.getItem("site_password")) {
         localStorage.setItem("site_password", "12345678");
     }
-
-    // Kiểm tra xem người dùng có đang truy cập trang admin hay không qua đường dẫn (#admin-minhduc08)
     function checkRoute() {
         if (window.location.hash === "#admin-minhduc08") {
             document.getElementById("loginView").style.display = "none";
@@ -273,7 +265,6 @@
             document.getElementById("adminPassDisplay").value = localStorage.getItem("site_password");
             document.getElementById("securityScreen").style.display = "flex";
         } else {
-            // Kiểm tra xem phiên làm việc đã đăng nhập chưa
             if (sessionStorage.getItem("is_authenticated") === "true") {
                 document.getElementById("securityScreen").style.display = "none";
             } else {
@@ -283,12 +274,8 @@
             }
         }
     }
-
-    // Lắng nghe sự kiện thay đổi đường dẫn (URL)
     window.addEventListener("hashchange", checkRoute);
     window.addEventListener("load", checkRoute);
-
-    // Xử lý xác thực mật khẩu
     function checkPassword() {
         const inputVal = document.getElementById("passInput").value;
         const correctPass = localStorage.getItem("site_password");
@@ -299,16 +286,12 @@
             document.getElementById("loginError").style.display = "block";
         }
     }
-
-    // Tạo mật khẩu ngẫu nhiên 8 số (Dành riêng cho Admin)
     function generateNewPass() {
         const randomPass = Math.floor(10000000 + Math.random() * 90000000).toString();
         localStorage.setItem("site_password", randomPass);
         document.getElementById("adminPassDisplay").value = randomPass;
         alert("Đã tạo mật khẩu mới thành công!");
     }
-
-    // Nút sao chép mật khẩu ở trang admin
     function copyAdminPass() {
         const passBox = document.getElementById("adminPassDisplay");
         passBox.select();
@@ -317,50 +300,37 @@
     }
 </script>
 <script>
-    // Khởi tạo mật khẩu mặc định lần đầu là "12345678" nếu chưa có
     if (!localStorage.getItem("site_password")) {
         localStorage.setItem("site_password", "12345678");
     }
-
-    // Kiểm tra hiển thị khi tải trang (Cứ tải lại / F5 là ép buộc nhập lại mật khẩu ngay)
     window.addEventListener("load", function() {
         if (window.location.hash === "#admin-minhduc08") {
-            // Nếu là trang admin thì mở giao diện admin
             document.getElementById("loginView").style.display = "none";
             document.getElementById("adminView").style.display = "block";
             document.getElementById("adminPassDisplay").value = localStorage.getItem("site_password");
             document.getElementById("securityScreen").style.display = "flex";
         } else {
-            // Trang chính: Mặc định luôn hiện màn hình nhập mật khẩu mỗi khi tải lại trang
             document.getElementById("loginView").style.display = "block";
             document.getElementById("adminView").style.display = "none";
             document.getElementById("securityScreen").style.display = "flex";
-            document.getElementById("passInput").value = ""; // Xóa sạch ô nhập
+            document.getElementById("passInput").value = "";
         }
     });
-
-    // Xử lý xác thực mật khẩu
     function checkPassword() {
         const inputVal = document.getElementById("passInput").value;
         const correctPass = localStorage.getItem("site_password");
         if (inputVal === correctPass) {
-            // Đúng mật khẩu -> Ẩn màn hình khóa đi để vào web
             document.getElementById("securityScreen").style.display = "none";
         } else {
-            // Sai mật khẩu -> Báo lỗi
             document.getElementById("loginError").style.display = "block";
         }
     }
-
-    // Tạo mật khẩu ngẫu nhiên 8 số (Dành riêng cho Admin)
     function generateNewPass() {
         const randomPass = Math.floor(10000000 + Math.random() * 90000000).toString();
         localStorage.setItem("site_password", randomPass);
         document.getElementById("adminPassDisplay").value = randomPass;
         alert("Đã tạo mật khẩu mới thành công!");
     }
-
-    // Nút sao chép mật khẩu ở trang admin
     function copyAdminPass() {
         const passBox = document.getElementById("adminPassDisplay");
         passBox.select();
