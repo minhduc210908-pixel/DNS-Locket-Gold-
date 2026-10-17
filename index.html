@@ -103,12 +103,7 @@
     </style>
 </head>
 <body class="text-slate-200 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950 font-sans antialiased">
-    <header class="border-b border-white/5 bg-slate-950/40 backdrop-blur-md sticky top-0 z-50">
-            <label style="color: #94a3b8; font-size: 12px; display: block; margin-top: 14px; margin-bottom: 6px;">Đổi mật khẩu tự chọn (Đủ 8 số):</label>
-            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-                <input type="text" id="customPassInput" maxlength="8" placeholder="Nhập 8 số..." style="flex: 1; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; padding: 10px; color: #fff; font-size: 14px; text-align: center; outline: none;">
-                <button onclick="confirmCustomPass()" style="background: linear-gradient(135deg, #3b82f6, #2563eb); border: none; color: #fff; padding: 0 14px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;">Xác nhận</button>
-            </div>
+    <header class="border-b border-white/5 bg-slate-950/40 backdrop-blur-md sticky top-0 z-50">       
         <div class="max-w-md mx-auto px-4 py-3.5 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-2xl gold-gradient flex items-center justify-center text-slate-950 font-black shadow-lg shadow-amber-500/20">
@@ -153,7 +148,11 @@
             <button onclick="generateNewPass()" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #10b981, #059669); border: none; color: #fff; font-weight: 600; border-radius: 12px; font-size: 15px; cursor: pointer; margin-bottom: 10px;">Tạo mật khẩu mới</button>
             <button onclick="location.hash = ''" style="width: 100%; padding: 10px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); color: #94a3b8; border-radius: 12px; font-size: 13px; cursor: pointer;">Quay lại trang chính</button>
         </div>
-
+        <label style="color: #94a3b8; font-size: 12px; display: block; margin-top: 14px; margin-bottom: 6px;">Đổi mật khẩu tự chọn (Đủ 8 số):</label>
+            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                <input type="text" id="customPassInput" maxlength="8" placeholder="Nhập 8 số..." style="flex: 1; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; padding: 10px; color: #fff; font-size: 14px; text-align: center; outline: none;">
+                <button onclick="confirmCustomPass()" style="background: linear-gradient(135deg, #3b82f6, #2563eb); border: none; color: #fff; padding: 0 14px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;">Xác nhận</button>
+            </div>
     </div>
 </div>
         <div class="glass-card rounded-2xl p-4 flex gap-3.5 items-start border-amber-500/20 bg-amber-500/5">
