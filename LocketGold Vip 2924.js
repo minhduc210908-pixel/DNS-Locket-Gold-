@@ -1,21 +1,8 @@
-// ============================================================
-// Locket Remote Config Rewrite
-// Endpoint: firebaseremoteconfig.googleapis.com
-// Dùng cho: Loon / Quantumult X / Surge / Shadowrocket
-// Tác giả: Minh Đức
-// Ae có thể đem bán hoặc share nhưng làm ơn hãy nhớ đến mình, ghi nguồn giúp mình nha, cảm ơn ae rất nhiều.
-// ============================================================
-
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"] || "";
 var obj = JSON.parse($response.body);
-
 if (ua.includes("Locket")) {
-    obj.Attention = "Chúc mừng bạn!";
+    obj.Attention = "Chúc mừng bạn! Vui lòng không sử dụng chúng dưới mục đích thương mại!";
     obj.entries = obj.entries || {};
-
-    // ============================================================
-    // 1. CẤU HÌNH GOLD, FEATURE GATES & PAYWALL
-    // ============================================================
     Object.assign(obj.entries, {
         feature_gates: JSON.stringify({
             app_icon_picker: "enabled",
@@ -55,8 +42,8 @@ if (ua.includes("Locket")) {
             title: "Lên Locket Gold rồi đó 😎",
             feature_set: [
                 {
-                    title: "Cảm ơn bạn đã tin tưởng sử dụng dịch vụ của Minh Đức ✨",
-                    body: "Nhớ giới thiệu cho bạn bè ủng hộ Minh Đức nha💛",
+                    title: "Cảm ơn bạn đã tin tưởng và ủng hộ dịch vụ của Minh Đức ✨",
+                    body: "Nhớ giới thiệu cho bạn bè của bạn nha 💛",
                     imageURL: "https://i.ibb.co/bj2Y3d0y/L-n-Gold-R-i-1.png"
                 }
             ],
@@ -70,12 +57,8 @@ if (ua.includes("Locket")) {
         profile_badge_visible: "true",
         lunar_new_year_app_icon_enabled: "true",
         settings_instagram_url: "https://www.instagram.com/_08.mduzz/",
-        settings_tiktok_url: "https://tiktok.com/@_08.mduzz"
+        settings_tiktok_url: "https://tiktok.com/_08.mduzz"
     });
-
-    // ============================================================
-    // 2. CHẶN QUẢNG CÁO & TẮT TRACKING (SENTRY)
-    // ============================================================
     Object.assign(obj.entries, {
         history_ads_mode: "off",
         history_ads_prefetch_count: "0",
@@ -93,10 +76,6 @@ if (ua.includes("Locket")) {
         sentry_trace_sample_rate: "0",
         sentry_profiles_sample_rate: "0"
     });
-
-    // ============================================================
-    // 3. CAMERA, VIDEO, FILTERS & UPLOAD QUALITY
-    // ============================================================
     Object.assign(obj.entries, {
         camera: JSON.stringify({
             gold_max_duration: 60.0,
@@ -174,10 +153,6 @@ if (ua.includes("Locket")) {
         upload_thumbnail_image_quality: "0.8",
         upload_thumbnail_image_size: "1020"
     });
-
-    // ============================================================
-    // 4. BẠN BÈ, GIỚI HẠN & ĐỀ XUẤT KẾT BẠN
-    // ============================================================
     Object.assign(obj.entries, {
         max_friends_count: "999999999",
         friend_limit_mode: "0",
@@ -207,10 +182,6 @@ if (ua.includes("Locket")) {
         user_data_export_enabled: "true",
         username_suggestions_enabled: "true",
     });
-
-    // ============================================================
-    // 5. MOMENTS, STREAK, CHAT & TƯƠNG TÁC
-    // ============================================================
     try {
         var streak = JSON.parse(obj.entries.streak_config || "{}");
         streak.minimum_recovery_count = 0;
@@ -251,10 +222,6 @@ if (ua.includes("Locket")) {
         rollcall_confirm_skip_tagging: "false",
         rollcall_tap_to_tag_enabled: "false",
     });
-
-    // ============================================================
-    // 6. WIDGET, THÔNG BÁO & GIAO DIỆN (JOURNAL / PROFILE)
-    // ============================================================
     Object.assign(obj.entries, {
         widget_frame_event_max_images: "5",
         android_widget_frame_event_enabled: "true",
@@ -297,10 +264,6 @@ if (ua.includes("Locket")) {
         custom_profile_pics: "true",
         profile_menu_v2_enabled: "true"
     });
-
-    // ============================================================
-    // 7. HỆ THỐNG, CACHE & STORAGE CDN
-    // ============================================================
     Object.assign(obj.entries, {
         cdn_domain_replacements: JSON.stringify({ "firebasestorage.googleapis.com": "cdn.locketcamera.com" }),
         cdn_domain_replacements_video: "true",
@@ -338,10 +301,6 @@ if (ua.includes("Locket")) {
         persist_onboarding_step: "true",
         onboarding_contact_permission_step: "true",
     });
-
-    // ============================================================
-    // 8. OVERLAY & CUSTOM CAPTIONS
-    // ============================================================
     Object.assign(obj.entries, {
         overlay_navigator_enabled: "true",
         overlays_v2_config: JSON.stringify({ suggestions_enabled: true }),
@@ -657,5 +616,4 @@ if (ua.includes("Locket")) {
         ])
     });
 }
-
 $done({ body: JSON.stringify(obj) });
