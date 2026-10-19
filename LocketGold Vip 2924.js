@@ -44,7 +44,7 @@ if (ua.includes("Locket")) {
                 {
                     title: "Cảm ơn bạn đã tin tưởng và ủng hộ dịch vụ của Minh Đức ✨",
                     body: "Nhớ giới thiệu cho bạn bè của bạn nha 💛",
-                    imageURL: "https://i.ibb.co/bj2Y3d0y/L-n-Gold-R-i-1.png"
+                    imageURL: "https://raw.githubusercontent.com/minhduc210908-pixel/DNS-Locket-Gold-/refs/heads/main/IMG_1797.JPG"
                 }
             ],
             primary_button_title: "Xong",
