@@ -55,8 +55,8 @@ if (ua.includes("Locket")) {
             title: "Lên Locket Gold rồi đó 😎",
             feature_set: [
                 {
-                    title: "Cảm ơn bạn đã tin tưởng sử dụng dịch vụ bên mình ✨",
-                    body: "Nhớ giới thiệu cho bạn bè ủng hộ mình nha💛",
+                    title: "Cảm ơn bạn đã tin tưởng sử dụng dịch vụ của Minh Đức ✨",
+                    body: "Nhớ giới thiệu cho bạn bè ủng hộ Minh Đức nha💛",
                     imageURL: "https://i.ibb.co/bj2Y3d0y/L-n-Gold-R-i-1.png"
                 }
             ],
