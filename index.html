@@ -313,38 +313,9 @@
     }
 </script>
 <script>
-    if (!localStorage.getItem("site_password")) {
-        localStorage.setItem("site_password", "12345678");
-    }
-    window.addEventListener("load", function() {
-        if (window.location.hash === "#admin-minhduc08") {
-            document.getElementById("loginView").style.display = "none";
-            document.getElementById("adminView").style.display = "block";
-            document.getElementById("adminPassDisplay").value = localStorage.getItem("site_password");
-            document.getElementById("securityScreen").style.display = "flex";
-        } else {
-            document.getElementById("loginView").style.display = "block";
-            document.getElementById("adminView").style.display = "none";
-            document.getElementById("securityScreen").style.display = "flex";
-            document.getElementById("passInput").value = "";
-        }
-    });
-const GIST_ID = '81441201821d9eb7e272973bcfb83d83'; 
+    const GIST_ID = '81441201821d9eb7e272973bcfb83d83'; 
 const GITHUB_TOKEN = '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';
-window.addEventListener("load", async function() {
-    if (window.location.hash === "#admin-minhduc08") {
-        document.getElementById("loginView").style.display = "none";
-        document.getElementById("adminView").style.display = "block";
-        const currentPass = await getPassFromGist();
-        document.getElementById("adminPassDisplay").value = currentPass;
-        document.getElementById("securityScreen").style.display = "flex";
-    } else {
-        document.getElementById("loginView").style.display = "block";
-        document.getElementById("adminView").style.display = "none";
-        document.getElementById("securityScreen").style.display = "flex";
-        document.getElementById("passInput").value = "";
-    }
-});
+
 async function getPassFromGist() {
     try {
         let response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
@@ -380,6 +351,23 @@ async function savePassToGist(newPass) {
         return false;
     }
 }
+async function checkRoute() {
+    if (window.location.hash === "#admin-minhduc08") {
+        document.getElementById("loginView").style.display = "none";
+        document.getElementById("adminView").style.display = "block";
+        const currentPass = await getPassFromGist();
+        document.getElementById("adminPassDisplay").value = currentPass;
+        document.getElementById("securityScreen").style.display = "flex";
+    } else {
+        document.getElementById("loginView").style.display = "block";
+        document.getElementById("adminView").style.display = "none";
+        document.getElementById("securityScreen").style.display = "flex";
+        document.getElementById("passInput").value = "";
+    }
+}
+window.addEventListener("hashchange", checkRoute);
+window.addEventListener("load", checkRoute);
+
 async function checkPassword() {
     const inputVal = document.getElementById("passInput").value;
     const correctPass = await getPassFromGist();
