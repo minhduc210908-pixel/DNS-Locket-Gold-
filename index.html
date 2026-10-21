@@ -250,24 +250,17 @@
             }
 </script>
 <script>
-// ĐẶT MẬT KHẨU TRỰC TIẾP TẠI ĐÂY (Thích đổi gì thì sửa vào trong dấu ngoặc kép)
 const MY_PASSWORD = "21092008";
-
-// Khi mở web lên luôn hiển thị bảng nhập mật khẩu
 window.addEventListener("load", function() {
     document.getElementById("securityScreen").style.display = "flex";
     document.getElementById("passInput").value = "";
 });
-
-// Hàm kiểm tra mật khẩu ngay tại chỗ
 function checkPassword() {
     const inputVal = document.getElementById("passInput").value.trim();
     
     if (inputVal === MY_PASSWORD) {
-        // Đúng mật khẩu -> ẩn màn hình khóa đi cho vào web
         document.getElementById("securityScreen").style.display = "none";
     } else {
-        // Sai mật khẩu -> hiện thông báo lỗi
         document.getElementById("loginError").style.display = "block";
     }
 }
