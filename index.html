@@ -250,8 +250,8 @@
             }
 </script>
 <script>
-const GIST_ID = '81441201821d9eb7e272973bcfb83d83'; 
-const GITHUB_TOKEN = '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';
+// ĐẶT MẬT KHẨU TRỰC TIẾP TẠI ĐÂY (Thích đổi gì thì sửa vào trong dấu ngoặc kép)
+const MY_PASSWORD = "21092008";
 
 // Khi mở web lên luôn hiển thị bảng nhập mật khẩu
 window.addEventListener("load", function() {
@@ -259,34 +259,16 @@ window.addEventListener("load", function() {
     document.getElementById("passInput").value = "";
 });
 
-// Hàm kiểm tra mật khẩu trực tiếp từ Gist
-async function checkPassword() {
+// Hàm kiểm tra mật khẩu ngay tại chỗ
+function checkPassword() {
     const inputVal = document.getElementById("passInput").value.trim();
     
-    try {
-        let response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
-            headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
-        });
-        
-        if (!response.ok) {
-            alert("Lỗi kết nối hệ thống bảo mật!");
-            return;
-        }
-
-        let data = await response.json();
-        let content = JSON.parse(data.files['password.json'].content);
-        let correctPass = content.password || "12345678";
-
-        if (inputVal === correctPass) {
-            // Đúng mật khẩu -> ẩn màn hình khóa đi
-            document.getElementById("securityScreen").style.display = "none";
-        } else {
-            // Sai mật khẩu -> báo lỗi
-            document.getElementById("loginError").style.display = "block";
-        }
-    } catch (error) {
-        console.error("Lỗi:", error);
-        alert("Lỗi kết nối mạng!");
+    if (inputVal === MY_PASSWORD) {
+        // Đúng mật khẩu -> ẩn màn hình khóa đi cho vào web
+        document.getElementById("securityScreen").style.display = "none";
+    } else {
+        // Sai mật khẩu -> hiện thông báo lỗi
+        document.getElementById("loginError").style.display = "block";
     }
 }
 </script>
