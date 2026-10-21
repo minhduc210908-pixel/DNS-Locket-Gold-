@@ -130,9 +130,9 @@
         </div>
     </header>
     <main class="max-w-md mx-auto px-4 py-8 flex-1 w-full flex flex-col gap-6">
-        <div id="securityScreen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px;">
-    <div style="background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 32px 24px; max-width: 380px; width: 100%; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
-        <div id="loginView">
+    <div id="securityScreen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px;">
+       <div style="background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 32px 24px; max-width: 380px; width: 100%; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
+          <div id="loginView">
             <div style="font-size: 36px; margin-bottom: 16px;">🔒</div>
             <h2 style="color: #f8fafc; font-size: 18px; font-weight: 600; margin-bottom: 8px;">Yêu Cầu Bảo Mật</h2>
             <p style="color: #94a3b8; font-size: 13px; line-height: 1.5; margin-bottom: 20px;">Vì lý do bảo mật, bạn cần nhập mật khẩu để tiếp tục.</p>
@@ -143,25 +143,7 @@
             <button onclick="checkPassword()" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #3b82f6, #2563eb); border: none; color: #fff; font-weight: 600; border-radius: 12px; font-size: 15px; cursor: pointer; margin-bottom: 16px;">Xác nhận</button>
             
             <a href="https://www.instagram.com/_08.mduzz/" target="_blank" style="display: block; color: #94a3b8; font-size: 13px; text-decoration: none;">👉Nhắn trực tiếp cho Minh Đức ở đây💌👈</a>
-        </div>
-        <div id="adminView" style="display: none; text-align: left;">
-            <h2 style="color: #f8fafc; font-size: 18px; font-weight: 600; margin-bottom: 8px; text-align: center;">Trang Quản Trị Admin</h2>
-            <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px; text-align: center;">Tạo và đổi mật khẩu 8 số mới cho trang web.</p>
-            
-            <label style="color: #94a3b8; font-size: 12px; display: block; margin-bottom: 6px;">Mật khẩu 8 số hiện tại / mới:</label>
-            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-                <input type="text" id="adminPassDisplay" readonly style="flex: 1; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; padding: 10px; color: #38bdf8; font-size: 14px; font-family: monospace; text-align: center;">
-                <button onclick="copyAdminPass()" style="background: rgba(255, 255, 255, 0.1); border: none; color: #fff; padding: 0 14px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;">Sao chép</button>
-            </div>
-            
-            <button onclick="generateNewPass()" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #10b981, #059669); border: none; color: #fff; font-weight: 600; border-radius: 12px; font-size: 15px; cursor: pointer; margin-bottom: 10px;">Tạo mật khẩu mới</button>
-            <label style="color: #94a3b8; font-size: 12px; display: block; margin-top: 14px; margin-bottom: 6px;">Đổi mật khẩu tự chọn (Đủ 8 số):</label>
-            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-                <input type="text" id="customPassInput" maxlength="8" placeholder="Nhập 8 số..." style="flex: 1; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; padding: 10px; color: #fff; font-size: 14px; text-align: center; outline: none;">
-                <button onclick="confirmCustomPass()" style="background: linear-gradient(135deg, #3b82f6, #2563eb); border: none; color: #fff; padding: 0 14px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;">Xác nhận</button>
-            </div>
-            <button onclick="location.hash = ''" style="width: 100%; padding: 10px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); color: #94a3b8; border-radius: 12px; font-size: 13px; cursor: pointer;">Quay lại trang chính</button>
-        </div>
+        </div>        
     </div>
 </div>
         <div class="glass-card rounded-2xl p-4 flex gap-3.5 items-start border-amber-500/20 bg-amber-500/5">
@@ -268,158 +250,43 @@
             }
 </script>
 <script>
-    if (!localStorage.getItem("site_password")) {
-        localStorage.setItem("site_password", "12345678");
-    }
-    function checkRoute() {
-        if (window.location.hash === "#admin-minhduc08") {
-            document.getElementById("loginView").style.display = "none";
-            document.getElementById("adminView").style.display = "block";
-            document.getElementById("adminPassDisplay").value = localStorage.getItem("site_password");
-            document.getElementById("securityScreen").style.display = "flex";
-        } else {
-            if (sessionStorage.getItem("is_authenticated") === "true") {
-                document.getElementById("securityScreen").style.display = "none";
-            } else {
-                document.getElementById("loginView").style.display = "block";
-                document.getElementById("adminView").style.display = "none";
-                document.getElementById("securityScreen").style.display = "flex";
-            }
-        }
-    }
-    window.addEventListener("hashchange", checkRoute);
-    window.addEventListener("load", checkRoute);
-    function checkPassword() {
-        const inputVal = document.getElementById("passInput").value;
-        const correctPass = localStorage.getItem("site_password");
-        if (inputVal === correctPass) {
-            sessionStorage.setItem("is_authenticated", "true");
-            document.getElementById("securityScreen").style.display = "none";
-        } else {
-            document.getElementById("loginError").style.display = "block";
-        }
-    }
-    function generateNewPass() {
-        const randomPass = Math.floor(10000000 + Math.random() * 90000000).toString();
-        localStorage.setItem("site_password", randomPass);
-        document.getElementById("adminPassDisplay").value = randomPass;
-        alert("Đã tạo mật khẩu mới thành công!");
-    }
-    function copyAdminPass() {
-        const passBox = document.getElementById("adminPassDisplay");
-        passBox.select();
-        navigator.clipboard.writeText(passBox.value);
-        alert("Đã sao chép mật khẩu vào bộ nhớ tạm!");
-    }
-</script>
-<script>
-    if (!localStorage.getItem("site_password")) {
-        localStorage.setItem("site_password", "12345678");
-    }
-    window.addEventListener("load", function() {
-        if (window.location.hash === "#admin-minhduc08") {
-            document.getElementById("loginView").style.display = "none";
-            document.getElementById("adminView").style.display = "block";
-            document.getElementById("adminPassDisplay").value = localStorage.getItem("site_password");
-            document.getElementById("securityScreen").style.display = "flex";
-        } else {
-            document.getElementById("loginView").style.display = "block";
-            document.getElementById("adminView").style.display = "none";
-            document.getElementById("securityScreen").style.display = "flex";
-            document.getElementById("passInput").value = "";
-        }
-    });
 const GIST_ID = '81441201821d9eb7e272973bcfb83d83'; 
 const GITHUB_TOKEN = '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';
-window.addEventListener("load", async function() {
-    if (window.location.hash === "#admin-minhduc08") {
-        document.getElementById("loginView").style.display = "none";
-        document.getElementById("adminView").style.display = "block";
-        const currentPass = await getPassFromGist();
-        document.getElementById("adminPassDisplay").value = currentPass;
-        document.getElementById("securityScreen").style.display = "flex";
-    } else {
-        document.getElementById("loginView").style.display = "block";
-        document.getElementById("adminView").style.display = "none";
-        document.getElementById("securityScreen").style.display = "flex";
-        document.getElementById("passInput").value = "";
-    }
+
+// Khi mở web lên luôn hiển thị bảng nhập mật khẩu
+window.addEventListener("load", function() {
+    document.getElementById("securityScreen").style.display = "flex";
+    document.getElementById("passInput").value = "";
 });
-async function getPassFromGist() {
+
+// Hàm kiểm tra mật khẩu trực tiếp từ Gist
+async function checkPassword() {
+    const inputVal = document.getElementById("passInput").value.trim();
+    
     try {
         let response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
             headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
         });
+        
+        if (!response.ok) {
+            alert("Lỗi kết nối hệ thống bảo mật!");
+            return;
+        }
+
         let data = await response.json();
         let content = JSON.parse(data.files['password.json'].content);
-        return content.password || "12345678";
-    } catch (error) {
-        console.error("Lỗi đọc Gist:", error);
-        return "12345678";
-    }
-}
-async function savePassToGist(newPass) {
-    try {
-        let response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
-            method: 'PATCH',
-            headers: {
-                'Authorization': `token ${GITHUB_TOKEN}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                files: {
-                    'password.json': {
-                        content: JSON.stringify({ password: newPass }, null, 2)
-                    }
-                }
-            })
-        });
-        return response.ok;
-    } catch (error) {
-        console.error("Lỗi ghi Gist:", error);
-        return false;
-    }
-}
-async function checkPassword() {
-    const inputVal = document.getElementById("passInput").value;
-    const correctPass = await getPassFromGist();
-    
-    if (inputVal === correctPass) {
-        document.getElementById("securityScreen").style.display = "none";
-    } else {
-        document.getElementById("loginError").style.display = "block";
-    }
-}
-async function generateNewPass() {
-    const randomPass = Math.floor(10000000 + Math.random() * 90000000).toString();
-    const success = await savePassToGist(randomPass);
-    
-    if (success) {
-        document.getElementById("adminPassDisplay").value = randomPass;
-        alert("Đã tạo và đồng bộ mật khẩu mới lên Gist thành công!");
-    } else {
-        alert("Lỗi khi lưu mật khẩu lên GitHub!");
-    }
-}
-function copyAdminPass() {
-    const passBox = document.getElementById("adminPassDisplay");
-    passBox.select();
-    navigator.clipboard.writeText(passBox.value);
-    alert("Đã sao chép mật khẩu vào bộ nhớ tạm!");
-}
-async function confirmCustomPass() {
-    const customVal = document.getElementById("customPassInput").value.trim();
-    if (/^\d{8}$/.test(customVal)) {
-        const success = await savePassToGist(customVal);
-        if (success) {
-            document.getElementById("adminPassDisplay").value = customVal;
-            document.getElementById("customPassInput").value = "";
-            alert("Đã đổi và đồng bộ mật khẩu mới thành công: " + customVal);
+        let correctPass = content.password || "12345678";
+
+        if (inputVal === correctPass) {
+            // Đúng mật khẩu -> ẩn màn hình khóa đi
+            document.getElementById("securityScreen").style.display = "none";
         } else {
-            alert("Lỗi khi kết nối GitHub để lưu mật khẩu!");
+            // Sai mật khẩu -> báo lỗi
+            document.getElementById("loginError").style.display = "block";
         }
-    } else {
-        alert("Lỗi: Mật khẩu bắt buộc phải nhập đủ 8 chữ số!");
+    } catch (error) {
+        console.error("Lỗi:", error);
+        alert("Lỗi kết nối mạng!");
     }
 }
 </script>
