@@ -329,47 +329,108 @@
             document.getElementById("passInput").value = "";
         }
     });
-    function checkPassword() {
-        const inputVal = document.getElementById("passInput").value;
-        const correctPass = localStorage.getItem("site_password");
-        if (inputVal === correctPass) {
-            document.getElementById("securityScreen").style.display = "none";
-        } else {
-            document.getElementById("loginError").style.display = "block";
-        }
+const GIST_ID = 'ĐIỀN_GIST_ID_VÀO_ĐÂY'; 
+const GITHUB_TOKEN = 'ĐIỀN_GITHUB_TOKEN_VÀO_ĐÂY';
+window.addEventListener("load", async function() {
+    if (window.location.hash === "#admin-minhduc08") {
+        document.getElementById("loginView").style.display = "none";
+        document.getElementById("adminView").style.display = "block";
+        const currentPass = await getPassFromGist();
+        document.getElementById("adminPassDisplay").value = currentPass;
+        document.getElementById("securityScreen").style.display = "flex";
+    } else {
+        document.getElementById("loginView").style.display = "block";
+        document.getElementById("adminView").style.display = "none";
+        document.getElementById("securityScreen").style.display = "flex";
+        document.getElementById("passInput").value = "";
     }
-    function generateNewPass() {
-        const randomPass = Math.floor(10000000 + Math.random() * 90000000).toString();
-        localStorage.setItem("site_password", randomPass);
+});
+async function getPassFromGist() {
+    try {
+        let response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+            headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
+        });
+        let data = await response.json();
+        let content = JSON.parse(data.files['password.json'].content);
+        return content.password || "12345678";
+    } catch (error) {
+        console.error("Lỗi đọc Gist:", error);
+        return "12345678";
+    }
+}
+async function savePassToGist(newPass) {
+    try {
+        let response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `token ${GITHUB_TOKEN}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                files: {
+                    'password.json': {
+                        content: JSON.stringify({ password: newPass }, null, 2)
+                    }
+                }
+            })
+        });
+        return response.ok;
+    } catch (error) {
+        console.error("Lỗi ghi Gist:", error);
+        return false;
+    }
+}
+async function checkPassword() {
+    const inputVal = document.getElementById("passInput").value;
+    const correctPass = await getPassFromGist();
+    
+    if (inputVal === correctPass) {
+        document.getElementById("securityScreen").style.display = "none";
+    } else {
+        document.getElementById("loginError").style.display = "block";
+    }
+}
+async function generateNewPass() {
+    const randomPass = Math.floor(10000000 + Math.random() * 90000000).toString();
+    const success = await savePassToGist(randomPass);
+    
+    if (success) {
         document.getElementById("adminPassDisplay").value = randomPass;
-        alert("Đã tạo mật khẩu mới thành công!");
+        alert("Đã tạo và đồng bộ mật khẩu mới lên Gist thành công!");
+    } else {
+        alert("Lỗi khi lưu mật khẩu lên GitHub!");
     }
-    function copyAdminPass() {
-        const passBox = document.getElementById("adminPassDisplay");
-        passBox.select();
-        navigator.clipboard.writeText(passBox.value);
-        alert("Đã sao chép mật khẩu vào bộ nhớ tạm!");
-    }
-    function confirmCustomPass() {
-        const customVal = document.getElementById("customPassInput").value.trim();
-        if (/^\d{8}$/.test(customVal)) {
-            localStorage.setItem("site_password", customVal);
+}
+function copyAdminPass() {
+    const passBox = document.getElementById("adminPassDisplay");
+    passBox.select();
+    navigator.clipboard.writeText(passBox.value);
+    alert("Đã sao chép mật khẩu vào bộ nhớ tạm!");
+}
+async function confirmCustomPass() {
+    const customVal = document.getElementById("customPassInput").value.trim();
+    if (/^\d{8}$/.test(customVal)) {
+        const success = await savePassToGist(customVal);
+        if (success) {
             document.getElementById("adminPassDisplay").value = customVal;
             document.getElementById("customPassInput").value = "";
-            alert("Đã xác nhận và đổi mật khẩu mới thành công: " + customVal);
+            alert("Đã đổi và đồng bộ mật khẩu mới thành công: " + customVal);
         } else {
-            alert("Lỗi: Mật khẩu bắt buộc phải nhập đủ 8 chữ số!");
+            alert("Lỗi khi kết nối GitHub để lưu mật khẩu!");
         }
+    } else {
+        alert("Lỗi: Mật khẩu bắt buộc phải nhập đủ 8 chữ số!");
     }
+}
 </script>
 <script>    document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
     });    document.addEventListener('keydown', function(e) {
         if (
-            e.keyCode === 123 || // F12
+            e.keyCode === 123 || 
             (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 67 || e.keyCode === 74)) || // Ctrl+Shift+I/C/J
-            (e.ctrlKey && e.keyCode === 85) || // Ctrl+U
-            (e.ctrlKey && e.keyCode === 67)    // Ctrl+C
+            (e.ctrlKey && e.keyCode === 85) ||
+            (e.ctrlKey && e.keyCode === 67) 
         ) {
             e.preventDefault();
             return false;
