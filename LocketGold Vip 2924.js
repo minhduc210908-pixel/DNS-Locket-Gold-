@@ -43,7 +43,7 @@ if (ua.includes("Locket")) {
             feature_set: [
                 {
                     title: "Cảm ơn bạn đã tin tưởng và ủng hộ dịch vụ của Minh Đức ✨",
-                    body: "Nhớ giới thiệu cho bạn bè của bạn nha 💛",
+                    body: "Chup màn hình thông báo này để làm feedback nha 📷",
                     imageURL: "https://raw.githubusercontent.com/minhduc210908-pixel/DNS-Locket-Gold-/refs/heads/main/IMG_1797.JPG"
                 }
             ],
